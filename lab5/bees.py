@@ -52,21 +52,23 @@ class Bees:
     def send_workers(self, bee_part, sector, radius):
         # Отправляет рабочих пчёл для использования или изучения определенных регионов в пространстве поиска
         # на основе выбранных элитных и перспективных пчел.
+        min_bee = min(bee_part, key=itemgetter(2))
         for bee in bee_part:
             bee[0] = random.uniform(sector[0] - radius, sector[0] + radius)
             bee[1] = random.uniform(sector[1] - radius, sector[1] + radius)
             bee[2] = self.func(bee[0], bee[1])
+        bee_part[0] = min_bee
 
     def selected_search(self, param):
         # Выполняет процесс поиска, отправляя рабочих пчёл в разные регионы на основе выбранных элитных и перспективных пчел.
         for i in range(self.e):
-            Bees.send_workers(self,
+            self.send_workers(
                               self.workers[i * self.b_leet:i * self.b_leet + self.b_leet],
                               self.selected[i],
                               self.rad * param)
 
         for i in range(self.p):
-            Bees.send_workers(self,
+            self.send_workers(
                               self.workers[self.e * self.b_leet + i * self.b_persp:self.e * self.b_leet +
                                                                                  i * self.b_persp + self.b_persp],
                               self.selected[self.e + i],

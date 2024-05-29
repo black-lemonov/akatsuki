@@ -80,8 +80,8 @@ def main():
             for scout in bees_swarm.scouts:
                 ax.scatter(scout[0], scout[1], scout[2], c="blue", s=1, marker="s")
 
-            bees_swarm.research_reports()
             bees_swarm.selected_search(1 / (i + 1))
+            bees_swarm.research_reports()
 
             for sec in bees_swarm.selected:
                 rx, ry, rz = make_square(sec[0], sec[1], 1 / (i + 1), func)
