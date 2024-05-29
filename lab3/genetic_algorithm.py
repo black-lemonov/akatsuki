@@ -1,4 +1,4 @@
-from random import uniform, random
+from random import uniform, random, randint
 
 class GeneticAlgorithm:
     # Функция приспособленности, количество поколений, вероятность мутации, коэффициент выживаемости, размер популяции.
@@ -55,7 +55,7 @@ class GeneticAlgorithm:
     def mutation(self, cur_gen):
         for pop in self.population.values():
             if random() < self.mut_chance:
-                pop[0] += (random() - 0.5) * ((self.generations - cur_gen) / self.generations)
+                pop[0] += randint(-1, 1)*0.1*pop[0]
             if random() < self.mut_chance:
-                pop[1] += (random() - 0.5) * ((self.generations - cur_gen) / self.generations)
+                pop[1] += randint(-1, 1)*0.1*pop[1]
             pop[2] = self.func(pop[0], pop[1])

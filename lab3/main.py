@@ -72,7 +72,7 @@ def main():
         ax.plot_surface(x, y, z, rstride=5, cstride=5, alpha=0.5)
         canvas.draw()
 
-        for i in range(50):
+        for i in range(iter_number):
             for j in range(pop_number):
                 ax.scatter(genetic.population[j][0], genetic.population[j][1], genetic.population[j][2], c="black", s=1,
                            marker="s")
@@ -138,13 +138,13 @@ def main():
     lbl_6_tab_3 = Label(tab_3, text="Функция Розенброка")
 
     txt_1_tab_3 = Entry(right_f_tab_3)
-    txt_1_tab_3.insert(0,"20")
+    txt_1_tab_3.insert(0,"50")
     txt_2_tab_3 = Entry(right_f_tab_3)
-    txt_2_tab_3.insert(0,"50")
+    txt_2_tab_3.insert(0,"100")
     txt_3_tab_3 = Entry(right_f_tab_3)
-    txt_3_tab_3.insert(0,"0.8")
+    txt_3_tab_3.insert(0,"0.9")
     txt_4_tab_3 = Entry(right_f_tab_3)
-    txt_4_tab_3.insert(0,"0.8")
+    txt_4_tab_3.insert(0,"0.3")
     txt_5_tab_3 = Entry(right_f_tab_3)
     txt_5_tab_3.insert(0,"0.01")
 
