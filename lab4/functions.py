@@ -10,9 +10,9 @@ def make_data_rastrigin(p_X, p_Y):
     return x_grid, y_grid, z
 
 def rastrigin(x):
-    return np.sum(x[1:] ** 2 - 10 * np.cos(2 * np.pi * x[1:]) + x[:-1] ** 2 - 10 * np.cos(2 * np.pi * x[:-1]), axis=0)
+    return 10*len(x) + np.sum(x[1:] ** 2 - 10 * np.cos(2 * np.pi * x[1:]) + x[:-1] ** 2 - 10 * np.cos(2 * np.pi * x[:-1]), axis=0)
 
 def rastrigin_2(x, y):
-    return x ** 2 - 10 * np.cos(2 * np.pi * x) + y ** 2 - 10 * np.cos(2 * np.pi * y)
+    return 20 + x ** 2 - 10 * np.cos(2 * np.pi * x) + y ** 2 - 10 * np.cos(2 * np.pi * y)
 
 
