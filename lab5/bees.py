@@ -55,18 +55,18 @@ class Bees:
         for bee in bee_part:
             bee[0] = random.uniform(sector[0] - radius, sector[0] + radius)
             bee[1] = random.uniform(sector[1] - radius, sector[1] + radius)
-            bee[2] = random.uniform(sector[2] - radius, sector[2] + radius)
+            bee[2] = self.func(bee[0], bee[1])
 
     def selected_search(self, param):
         # Выполняет процесс поиска, отправляя рабочих пчёл в разные регионы на основе выбранных элитных и перспективных пчел.
         for i in range(self.e):
-            Bees.send_workers(self.func,
+            Bees.send_workers(self,
                               self.workers[i * self.b_leet:i * self.b_leet + self.b_leet],
                               self.selected[i],
                               self.rad * param)
 
         for i in range(self.p):
-            Bees.send_workers(self.func,
+            Bees.send_workers(self,
                               self.workers[self.e * self.b_leet + i * self.b_persp:self.e * self.b_leet +
                                                                                  i * self.b_persp + self.b_persp],
                               self.selected[self.e + i],

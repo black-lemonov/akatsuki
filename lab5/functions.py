@@ -10,10 +10,10 @@ def make_data_himmelblau(p_X, p_Y):
     return x_grid, y_grid, z
 
 def himmelblau(x):
-    return np.sum(2 * x[:-1] ** 2 + 3 * x[1:] ** 2 + 4 * x[:-1] * x[1:] - 6 * x[:-1] - 3 * x[1:], axis=0)
+    return (x[0]**2+x[1]-11)**2 + (x[0]+x[1]**2-7)**2
 
 def himmelblau_2(x, y):
-    return 2 * x * x + 3 * y * y + 4 * x * y - 6 * x - 3 * y
+    return (x**2+y-11)**2 + (x+y**2-7)**2
 
 def make_data_rosenbrock(p_X, p_Y):
     x = np.linspace(-p_X, p_X, 100)
