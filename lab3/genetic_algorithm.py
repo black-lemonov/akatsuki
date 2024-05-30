@@ -1,4 +1,4 @@
-from random import uniform, random, randint
+from random import uniform, random, randint, choices
 
 class GeneticAlgorithm:
     # Функция приспособленности, количество поколений, вероятность мутации, коэффициент выживаемости, размер популяции.
@@ -31,19 +31,20 @@ class GeneticAlgorithm:
             sorted(self.population.items(), key=lambda item: item[1][2], reverse=self.min_func))  # Ранжирование
 # Кроссинговер - случайным образом выбираются 2 родителя и создаются 2 ребенка путем обмена их генами.
         cof = int(self.pop_number * (1 - self.survive_cof))
-        parents1 = list(sorted_pop.items())[cof: cof * 2]
-        parents2 = list(sorted_pop.items())[self.pop_number - cof: self.pop_number]
 
         i = 0
         for pop in sorted_pop.values():
+            parents = choices(list(sorted_pop.values()), k=2)
+            parent1 = parents[0]
+            parent2 = parents[1]
             if random() > 0.5:
-                pop[0] = parents1[i][1][0]
-                pop[1] = parents2[i][1][1]
-                pop[2] = self.func(parents1[i][1][0], parents2[i][1][1])
+                pop[0] = parent1[0]
+                pop[1] = parent2[1]
+                pop[2] = self.func(pop[0], pop[1])
             else:
-                pop[0] = parents2[i][1][0]
-                pop[1] = parents1[i][1][1]
-                pop[2] = self.func(parents2[i][1][0], parents1[i][1][1])
+                pop[0] = parent2[0]
+                pop[1] = parent1[1]
+                pop[2] = self.func(pop[0], pop[1])
             i += 1
             if i >= cof:
                 break
