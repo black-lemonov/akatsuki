@@ -78,7 +78,7 @@ def main():
                            marker="s")
 
             genetic.select()
-            genetic.mutation(i)
+            genetic.mutation()
 
             if min_max:
                 gen_stat = list(genetic.statistic()[1])

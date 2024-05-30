@@ -53,10 +53,15 @@ class GeneticAlgorithm:
 
 # Вносятся случайные изменения в гены индивидуумов с определенной вероятностью,
 # что помогает исследовать новые области пространства решений.
-    def mutation(self, cur_gen):
+    def mutation(self):
+        cof = int(self.pop_number * (1 - self.survive_cof))
+        i = 0
         for pop in self.population.values():
             if random() < self.mut_chance:
                 pop[0] += randint(-1, 1)*0.1*pop[0]
             if random() < self.mut_chance:
                 pop[1] += randint(-1, 1)*0.1*pop[1]
             pop[2] = self.func(pop[0], pop[1])
+            i += 1
+            if i >= cof:
+                break
