@@ -57,12 +57,8 @@ def main():
         for j in range(pop_number):
             ax.scatter(genetic.population[j][0], genetic.population[j][1], genetic.population[j][2], c="black", s=1,
                        marker="s")
-        if min_max:
-            gen_stat = list(genetic.statistic()[1])
-        else:
-            gen_stat = list(genetic.statistic()[0])
 
-        ax.scatter(gen_stat[1][0], gen_stat[1][1], gen_stat[1][2], c="red")
+        ax.scatter(*genetic.best(), c="red")
         canvas.draw()
         window.update()
 
@@ -80,16 +76,12 @@ def main():
             genetic.select()
             genetic.mutation()
 
-            if min_max:
-                gen_stat = list(genetic.statistic()[1])
-            else:
-                gen_stat = list(genetic.statistic()[0])
+            ax.scatter(*genetic.best(), c="red")
 
-            ax.scatter(gen_stat[1][0], gen_stat[1][1], gen_stat[1][2], c="red")
-
-            txt_tab_3.insert(INSERT,
-                             f"{i}) ({round(gen_stat[1][0], 4)}) ({round(gen_stat[1][1], 4)}) = "
-                             f" ({round(gen_stat[1][2], 4)})\n")
+            txt_tab_3.insert(
+                INSERT,
+                "%2d) (%7.4f, %7.4f) = %7.4f\n" % (i, *genetic.best())
+                )
 
             canvas.draw()
             window.update()
