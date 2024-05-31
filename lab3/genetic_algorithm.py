@@ -1,6 +1,7 @@
 from random import uniform, random, randint
 from typing import Callable
 from operator import itemgetter
+from math import floor
 
 class GeneticAlgorithm:
     '''Реализация генетического алгоритма Татаряна-Парфинцова'''
@@ -16,18 +17,18 @@ class GeneticAlgorithm:
         '''
         fitness          : функция для оптимизации\n
         generations_limit: кол-во поколений\n
-        is_min           : поиск минимума или нет\n 
+        is_min           : искать минимум или нет\n 
         p_mutation       : вероятность мутации\n
-        p_survive        : коэффициент выживаемости\n 
+        p_survive        : веротность выживаемости\n 
         population_size  : размер популяции
         '''
-        self.fitness = fitness
-        self.population = []
-        self.p_mutation = p_mutation
-        self.p_survive = p_survive
+        self.fitness           = fitness
+        self.population        = []
+        self.p_mutation        = p_mutation
+        self.p_survive         = p_survive
         self.generations_limit = generations_limit
-        self.population_size = population_size
-        self.is_min = is_min
+        self.population_size   = population_size
+        self.is_min            = is_min
 
     def generate_start_population(
             self, 
@@ -44,7 +45,7 @@ class GeneticAlgorithm:
                 y:=uniform(-y_bound, y_bound),
                 self.fitness(x, y)
             ]
-            for key in range(self.population_size)
+            for _ in range(self.population_size)
         ]
 
     def best(self):
@@ -61,10 +62,10 @@ class GeneticAlgorithm:
         self.population.sort(key=itemgetter(2), reverse=self.is_min)    # ранжирование
 
         # Кроссинговер - случайным образом выбираются 2 родителя и создаются 2 ребенка путем обмена их генами.
-        children_count = int(self.population_size * (1 - self.p_survive))
+        children_count = floor(self.population_size * (1 - self.p_survive))
         parents = self.population[self.population_size - 2 * children_count:]
 
-        for _, one in enumerate(self.population[:children_count]):
+        for one in self.population[:children_count]:
             if random() > 0.5:
                 one[0], one[1], one[2] = (x:=parents.pop()[0]), (y:=parents.pop()[1]), self.fitness(x, y)
             else:
