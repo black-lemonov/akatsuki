@@ -25,9 +25,9 @@ class Bees:
         max_b = max(self.scouts, key=itemgetter(2))
         self.workers = [[self.pos_x, self.pos_y, max_b[2]] for _ in range(self.n_workers)]
 
-        self.bees = list()
+        self.bees = self.workers + self.scouts
 
-        self.selected = list()
+        self.selected = self.bees[:self.e + self.p]
 
         self.rad = radius
 
@@ -52,12 +52,10 @@ class Bees:
     def send_workers(self, bee_part, sector, radius):
         # Отправляет рабочих пчёл для использования или изучения определенных регионов в пространстве поиска
         # на основе выбранных элитных и перспективных пчел.
-        min_bee = min(bee_part, key=itemgetter(2))
         for bee in bee_part:
             bee[0] = random.uniform(sector[0] - radius, sector[0] + radius)
             bee[1] = random.uniform(sector[1] - radius, sector[1] + radius)
             bee[2] = self.func(bee[0], bee[1])
-        bee_part[0] = min_bee
 
     def selected_search(self, param):
         # Выполняет процесс поиска, отправляя рабочих пчёл в разные регионы на основе выбранных элитных и перспективных пчел.
