@@ -38,8 +38,8 @@ def main():
         py = 5.0
         x, y, z = make_data_rastrigin(px, py)
 
-        iter_number = int(txt_1_tab_4.get())
-        particle_number = int(txt_2_tab_4.get())
+        iterations = int(txt_1_tab_4.get())
+        particles_number = int(txt_2_tab_4.get())
         fi_p = float(txt_4_tab_4.get())
         fi_g = float(txt_5_tab_4.get())
         delay = txt_6_tab_4.get()
@@ -48,7 +48,7 @@ def main():
         ax.plot_surface(x, y, z, rstride=5, cstride=5, alpha=0.5)
         canvas.draw()
 
-        psa_obj = PSO(rastrigin_2, particle_number, px, py, fi_p, fi_g)
+        psa_obj = PSO(rastrigin_2, particles_number, px, py, fi_p, fi_g)
 
         for particle in psa_obj.particles:
             ax.scatter(particle[0], particle[1], particle[2], c="black", s=1, marker="s")
@@ -63,8 +63,24 @@ def main():
         ax.plot_surface(x, y, z, rstride=5, cstride=5, alpha=0.5)
         canvas.draw()
 
-        for i in range(iter_number):
-            psa_obj.next_iteration()
+        for i in range(iterations):
+            
+            # обновляет скорость и позицию каждой частицы, 
+            # а также находит новую лучшую частицу в поколении
+            
+            for j in range(particles_number):
+
+                if psa_obj.nostalgia[j][2] < psa_obj.particles[j][2]:
+                    point_best = psa_obj.nostalgia[j]
+                else:
+                    psa_obj.nostalgia[j] = psa_obj.particles[j]
+                    point_best = psa_obj.particles[j]
+
+                psa_obj.velocity[j] = psa_obj.update_velocity(psa_obj.velocity[j], psa_obj.particles[j], point_best)
+                psa_obj.particles[j] = psa_obj.update_position(psa_obj.velocity[j], psa_obj.particles[j])
+
+            psa_obj.generation_best = min(psa_obj.particles, key=lambda x: x[2])
+            
             for particle in psa_obj.particles:
                 ax.scatter(particle[0], particle[1], particle[2], c="black", s=1, marker="s")
 
